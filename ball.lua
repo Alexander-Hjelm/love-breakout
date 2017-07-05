@@ -46,7 +46,15 @@ function Ball.checkCollision(self)
   -- Collision check with paddle
   if self.y + 16 >= self.paddle:getY() then
     if self.x > self.paddle:getX() and self.x < self.paddle:getX() + self.paddle:getWidth() then
-      self.theta = - self.theta
+      -- Add spin
+      local spin = 1 - (self.x - self.paddle:getX())/self.paddle:getWidth()
+      -- local newTheta = - self.theta + math.pi * spin
+      local newTheta = - math.pi * spin
+      self.theta = math.max(math.min(newTheta, -0.14), -3)
+      print(spin)
+
+
+
       self.y = self.paddle:getY() - 16
     end
   end
