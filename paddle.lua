@@ -23,3 +23,15 @@ end
 function Paddle.update(self)
   self.x = love.mouse.getX() - 30
 end
+
+function Paddle.getX(self)
+  return self.x
+end
+
+function Paddle.getY(self)
+  return self.y
+end
+
+function Paddle.getWidth(self)
+  return 60
+end

@@ -6,7 +6,7 @@ local paddle
 
 function love.load()
   paddle = Paddle()
-  ball = Ball(100, 100)
+  ball = Ball(100, 100, paddle)
 end
 
 function love.draw()
