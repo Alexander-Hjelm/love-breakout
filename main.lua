@@ -1,6 +1,7 @@
 Object = require("classic")
 require("paddle")
 require("ball")
+require("brick")
 
 local paddle
 
@@ -10,6 +11,7 @@ function love.load()
 end
 
 function love.draw()
+  love.graphics.setColor(255, 255, 255, 255)
   love.graphics.print("Löve Breakout", 10, 10)
   paddle:draw()
   ball:draw()
