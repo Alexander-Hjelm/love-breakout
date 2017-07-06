@@ -24,13 +24,11 @@ function Ball.draw(self)
 end
 
 function Ball.update(self, dt)
-  self:checkCollision()
-  self:checkBricksCollision()
   self.x = self.x + self.v * math.cos(self.theta) * dt
   self.y = self.y + self.v * math.sin(self.theta) * dt
 end
 
-function Ball.checkCollision(self)
+function Ball.checkCollision(self, combo)
   width, height = love.graphics.getDimensions()
   if self.y <= 0 then
     self.theta = -self.theta
@@ -61,11 +59,14 @@ function Ball.checkCollision(self)
 
 
       self.y = self.paddle:getY() - 16
+      combo = 1
     end
   end
+
+  return combo
 end
 
-function Ball.checkBricksCollision(self)
+function Ball.checkBricksCollision(self, score, combo)
   local collided = false
 
   for i=1,#bricks do
@@ -109,23 +110,33 @@ function Ball.checkBricksCollision(self)
       if (not collided) and math.abs(theta) <= .464 and dist_x > 0 then
         self.theta = - math.pi - self.theta
         collided = true
+        score = score + 10 * combo
+        combo = combo + 0.5
       end
 
       if (not collided) and math.abs(theta) <= .464 and dist_x < 0 then
         self.theta = math.pi - self.theta
         collided = true
+        score = score + 10 * combo
+        combo = combo + 0.5
       end
 
       if (not collided) and math.abs(theta) > .464 and dist_y > 0 then
         self.theta = -self.theta
         collided = true
+        score = score + 10 * combo
+        combo = combo + 0.5
       end
 
       if (not collided) and math.abs(theta) > .464 and dist_y < 0 then
         self.theta = -self.theta
         collided = true
+        score = score + 10 * combo
+        combo = combo + 0.5
       end
 
     end
   end
+
+  return score, combo
 end

@@ -18,6 +18,9 @@ bricks = {}
 local paddle
 local ball
 
+local score = 0
+local combo = 1
+
 function love.load()
   paddle = Paddle()
   ball = Ball(100, 100, paddle, bricks)
@@ -25,19 +28,24 @@ function love.load()
 end
 
 function love.draw()
-  love.graphics.setColor(255, 255, 255, 255)
-  love.graphics.print("Löve Breakout", 10, 10)
-  paddle:draw()
-  ball:draw()
-
   for i=1,#bricks do
     bricks[i]:draw()
   end
+
+  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setFont(love.graphics.newFont(18))
+  love.graphics.print("Löve Breakout", 10, 10)
+  love.graphics.print("Score: " .. score, 10, 30)
+  love.graphics.print("Combo: " .. combo, 10, 50)
+  paddle:draw()
+  ball:draw()
 end
 
 function love.update(dt)
   paddle:update()
   ball:update(dt)
+  combo = ball:checkCollision(combo)
+  score, combo = ball:checkBricksCollision(score, combo)
 end
 
 function loadLevel()
