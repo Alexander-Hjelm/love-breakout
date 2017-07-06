@@ -1,6 +1,10 @@
 -- Class definition
 Brick = Object:extend()
 
+function Brick.new(self, x, y, col)
+  self:new(x, y, col[0], col[1], col[2])
+end
+
 -- Constructor
 function Brick.new(self, x, y, red, green, blue)
   self.x = x
@@ -12,6 +16,8 @@ function Brick.new(self, x, y, red, green, blue)
   -- Image definitions
   self.imgBrick = love.graphics.newImage("brick.png")
 end
+
+
 
 function Brick.draw(self)
   love.graphics.setColor(self.red, self.green, self.blue)
