@@ -2,14 +2,18 @@
 Ball = Object:extend()
 
 -- Constructor
-function Ball.new(self, x, y, paddle)
+function Ball.new(self, x, y, paddle, bricks)
   self.x = x
   self.y = y
+
+  self.width = 16
+  self.height = 16
 
   self.v = 400
   self.theta = 1.3
 
   self.paddle = paddle
+  self.bricks = bricks
 
   -- Image definitions
   self.imgBall = love.graphics.newImage("ball.png")
@@ -21,6 +25,7 @@ end
 
 function Ball.update(self, dt)
   self:checkCollision()
+  self:checkBricksCollision()
   self.x = self.x + self.v * math.cos(self.theta) * dt
   self.y = self.y + self.v * math.sin(self.theta) * dt
 end
@@ -56,6 +61,71 @@ function Ball.checkCollision(self)
 
 
       self.y = self.paddle:getY() - 16
+    end
+  end
+end
+
+function Ball.checkBricksCollision(self)
+  local collided = false
+
+  for i=1,#bricks do
+    local brick = bricks[i]
+
+    local ball_left = self.x
+    local ball_right = self.x + self.width
+    local ball_top = self.y
+    local ball_bottom = self.y + self.height
+
+    local brick_left = brick.x
+    local brick_right = brick.x + brick.width
+    local brick_top = brick.y
+    local brick_bottom = brick.y + brick.height
+
+    if not brick.destroyed and
+    --If Red's right side is further to the right than Blue's left side.
+    ball_right > brick_left and
+    --and Red's left side is further to the left than Blue's right side.
+    ball_left < brick_right and
+    --and Red's bottom side is further to the bottom than Blue's top side.
+    ball_bottom > brick_top and
+    --and Red's top side is further to the top than Blue's bottom side then..
+    ball_top < brick_bottom then
+        --There is collision!
+      brick:setDestroyed(true)
+        --If one of these statements is false, return false.
+
+      -- Rebound
+      local ball_center_x = self.x + self.width/2
+      local ball_center_y = self.y + self.height/2
+
+      local brick_center_x = brick.x + brick.width/2
+      local brick_center_y = brick.y + brick.height/2
+
+      local dist_x = ball_center_x - brick_center_x
+      local dist_y = ball_center_y - brick_center_y
+
+      local theta = math.atan(dist_y/dist_x)
+
+      if (not collided) and math.abs(theta) <= .464 and dist_x > 0 then
+        self.theta = - math.pi - self.theta
+        collided = true
+      end
+
+      if (not collided) and math.abs(theta) <= .464 and dist_x < 0 then
+        self.theta = math.pi - self.theta
+        collided = true
+      end
+
+      if (not collided) and math.abs(theta) > .464 and dist_y > 0 then
+        self.theta = -self.theta
+        collided = true
+      end
+
+      if (not collided) and math.abs(theta) > .464 and dist_y < 0 then
+        self.theta = -self.theta
+        collided = true
+      end
+
     end
   end
 end

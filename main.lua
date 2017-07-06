@@ -16,13 +16,12 @@ bricks = {}
 
 
 local paddle
+local ball
 
 function love.load()
   paddle = Paddle()
-  ball = Ball(100, 100, paddle)
+  ball = Ball(100, 100, paddle, bricks)
   loadLevel()
-
-
 end
 
 function love.draw()
