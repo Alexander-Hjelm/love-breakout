@@ -21,10 +21,12 @@ local ball
 local score = 0
 local combo = 1
 
+local currentLevel = 1
+
 function love.load()
   paddle = Paddle()
   ball = Ball(100, 100, paddle, bricks)
-  loadLevel()
+  loadLevel(currentLevel)
 end
 
 function love.draw()
@@ -39,6 +41,10 @@ function love.draw()
   love.graphics.print("Combo: " .. combo, 10, 50)
   paddle:draw()
   ball:draw()
+
+  if currentLevel == 11 then
+    love.graphics.print("You win! Final score: " .. score, 300, 200)
+  end
 end
 
 function love.update(dt)
@@ -46,15 +52,29 @@ function love.update(dt)
   ball:update(dt)
   combo = ball:checkCollision(combo)
   score, combo = ball:checkBricksCollision(score, combo)
+  if checkCompleted() then
+    currentLevel = currentLevel + 1
+    loadLevel(currentLevel)
+  end
 end
 
-function loadLevel()
+function checkCompleted()
+  completed = true
+  for i=1,#bricks do
+    if not bricks[i].destroyed then
+      completed = false
+    end
+  end
+  return completed
+end
+
+function loadLevel(levelNum)
   -- Load level
   --str = love.filesystem.read("level1.csv")
   local x = 0
   local y = 0
 
-  for line in love.filesystem.lines("level1.csv") do
+  for line in love.filesystem.lines("level" .. levelNum .. ".csv") do
 
     for i=1, #line do
       local char = string.sub(line, i, i)
