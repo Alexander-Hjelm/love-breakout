@@ -10,6 +10,7 @@ bCol = {30, 30, 255}
 cCol = {30, 255, 255}
 mCol = {255, 30, 255}
 yCol = {255, 255, 30}
+wCol = {255, 255, 255}
 
 -- level definitions
 bricks = {}
@@ -109,6 +110,11 @@ function loadLevel(levelNum)
 
       if (char == "y") then
         table.insert(bricks, Brick(40*x, 20*y, yCol))
+        x = x + 1
+      end
+
+      if (char == "w") then
+        table.insert(bricks, Brick(40*x, 20*y, wCol))
         x = x + 1
       end
 
