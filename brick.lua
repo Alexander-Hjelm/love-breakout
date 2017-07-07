@@ -17,7 +17,7 @@ function Brick.new(self, x, y, red, green, blue)
   self.destroyed = false
 
   -- Image definitions
-  self.imgBrick = love.graphics.newImage("brick.png")
+  self.imgBrick = love.graphics.newImage("/img/brick.png")
 end
 
 

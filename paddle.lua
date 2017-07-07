@@ -9,9 +9,9 @@ function Paddle.new(self)
   self.y = height - 30
 
   -- Image definitions
-  self.imgPaddleL = love.graphics.newImage("paddle_l.png")
-  self.imgPaddleMid = love.graphics.newImage("paddle_mid.png")
-  self.imgPaddleR = love.graphics.newImage("paddle_r.png")
+  self.imgPaddleL = love.graphics.newImage("/img/paddle_l.png")
+  self.imgPaddleMid = love.graphics.newImage("/img/paddle_mid.png")
+  self.imgPaddleR = love.graphics.newImage("/img/paddle_r.png")
 end
 
 function Paddle.draw(self)

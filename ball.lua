@@ -14,7 +14,7 @@ function Ball.new(self, paddle, bricks)
   self.bricks = bricks
 
   -- Image definitions
-  self.imgBall = love.graphics.newImage("ball.png")
+  self.imgBall = love.graphics.newImage("/img/ball.png")
 end
 
 function Ball.draw(self)

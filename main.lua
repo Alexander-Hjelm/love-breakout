@@ -79,7 +79,7 @@ function loadLevel(levelNum)
   local x = 0
   local y = 0
 
-  for line in love.filesystem.lines("level" .. levelNum .. ".csv") do
+  for line in love.filesystem.lines("/lvl/level" .. levelNum .. ".csv") do
 
     for i=1, #line do
       local char = string.sub(line, i, i)
