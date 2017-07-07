@@ -4,13 +4,14 @@ require("ball")
 require("brick")
 
 -- Color definitions
-rCol = {255, 30, 30}
-gCol = {30, 255, 30}
-bCol = {30, 30, 255}
-cCol = {30, 255, 255}
-mCol = {255, 30, 255}
-yCol = {255, 255, 30}
-wCol = {255, 255, 255}
+colors = {}
+colors['r'] = {255, 30, 30}
+colors['g'] = {30, 255, 30}
+colors['b'] = {30, 30, 255}
+colors['c'] = {30, 255, 255}
+colors['m'] = {255, 30, 255}
+colors['y'] = {255, 255, 30}
+colors['w'] = {255, 255, 255}
 
 -- level definitions
 bricks = {}
@@ -83,50 +84,20 @@ function loadLevel(levelNum)
     for i=1, #line do
       local char = string.sub(line, i, i)
 
-      if (char == "r") then
-        table.insert(bricks, Brick(40*x, 20*y, rCol))
-        x = x + 1
-      end
-
-      if (char == "b") then
-        table.insert(bricks, Brick(40*x, 20*y, bCol))
-        x = x + 1
-      end
-
-      if (char == "c") then
-        table.insert(bricks, Brick(40*x, 20*y, cCol))
-        x = x + 1
-      end
-
-      if (char == "g") then
-        table.insert(bricks, Brick(40*x, 20*y, gCol))
-        x = x + 1
-      end
-
-      if (char == "m") then
-        table.insert(bricks, Brick(40*x, 20*y, mCol))
-        x = x + 1
-      end
-
-      if (char == "y") then
-        table.insert(bricks, Brick(40*x, 20*y, yCol))
-        x = x + 1
-      end
-
-      if (char == "w") then
-        table.insert(bricks, Brick(40*x, 20*y, wCol))
-        x = x + 1
-      end
-
       if (char == "-") then
         x = x + 1
-
       end
 
       if (char == "e") then
         x = 0
         y = y + 1
       end
+
+      if not (char == "e" or char == "-" or char == ",") then
+        table.insert(bricks, Brick(40*x, 20*y, colors[char]))
+        x = x + 1
+      end
+
     end
   end
 end
