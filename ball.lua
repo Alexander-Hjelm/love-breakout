@@ -26,7 +26,7 @@ function Ball.update(self, dt)
   self.y = self.y + self.v * math.sin(self.theta) * dt
 end
 
-function Ball.checkCollision(self, combo)
+function Ball.checkCollision(self, combo, lives)
   width, height = love.graphics.getDimensions()
   if self.y <= 0 then
     self.theta = -self.theta
@@ -41,7 +41,12 @@ function Ball.checkCollision(self, combo)
     self.x = width - 16
   end
   if self.y + 16 >= height then
-    love.event.quit()
+    lives = lives - 1
+    if lives == 0 then
+      love.event.quit()
+    end
+    self:reset()
+    -- self.theta = -self.theta --cheat
   end
 
   -- Collision check with paddle
@@ -61,7 +66,7 @@ function Ball.checkCollision(self, combo)
     end
   end
 
-  return combo
+  return combo, lives
 end
 
 function Ball.checkBricksCollision(self, score, combo)

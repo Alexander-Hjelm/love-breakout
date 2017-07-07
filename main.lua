@@ -20,6 +20,7 @@ local ball
 
 local score = 0
 local combo = 1
+local lives = 3
 
 local currentLevel = 1
 
@@ -39,6 +40,7 @@ function love.draw()
   love.graphics.print("Löve Breakout", 10, 10)
   love.graphics.print("Score: " .. score, 10, 30)
   love.graphics.print("Combo: " .. combo, 10, 50)
+  love.graphics.print("Lives: " .. lives, 10, 70)
   paddle:draw()
   ball:draw()
 
@@ -50,7 +52,7 @@ end
 function love.update(dt)
   paddle:update()
   ball:update(dt)
-  combo = ball:checkCollision(combo)
+  combo, lives = ball:checkCollision(combo, lives)
   score, combo = ball:checkBricksCollision(score, combo)
   if checkCompleted() and currentLevel <= 10 then
     currentLevel = currentLevel + 1
