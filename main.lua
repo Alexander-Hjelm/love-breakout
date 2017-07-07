@@ -25,7 +25,7 @@ local currentLevel = 1
 
 function love.load()
   paddle = Paddle()
-  ball = Ball(100, 100, paddle, bricks)
+  ball = Ball(paddle, bricks)
   loadLevel(currentLevel)
 end
 
@@ -55,6 +55,7 @@ function love.update(dt)
   if checkCompleted() and currentLevel <= 10 then
     currentLevel = currentLevel + 1
     loadLevel(currentLevel)
+    ball:reset()
   end
 end
 

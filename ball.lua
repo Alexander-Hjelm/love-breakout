@@ -2,15 +2,13 @@
 Ball = Object:extend()
 
 -- Constructor
-function Ball.new(self, x, y, paddle, bricks)
-  self.x = x
-  self.y = y
+function Ball.new(self, paddle, bricks)
+  self:reset()
 
   self.width = 16
   self.height = 16
 
   self.v = 400
-  self.theta = 1.3
 
   self.paddle = paddle
   self.bricks = bricks
@@ -139,4 +137,11 @@ function Ball.checkBricksCollision(self, score, combo)
   end
 
   return score, combo
+end
+
+function Ball.reset(self)
+  self.x = 400
+  self.y = 500
+
+  self.theta = -0.785
 end
