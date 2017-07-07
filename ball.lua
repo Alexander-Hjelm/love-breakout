@@ -46,6 +46,7 @@ function Ball.checkCollision(self, combo, lives)
       love.event.quit()
     end
     self:reset()
+    combo = 1
     -- self.theta = -self.theta --cheat
   end
 
