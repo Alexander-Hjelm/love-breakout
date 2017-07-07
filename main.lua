@@ -52,7 +52,7 @@ function love.update(dt)
   ball:update(dt)
   combo = ball:checkCollision(combo)
   score, combo = ball:checkBricksCollision(score, combo)
-  if checkCompleted() then
+  if checkCompleted() and currentLevel <= 10 then
     currentLevel = currentLevel + 1
     loadLevel(currentLevel)
   end
