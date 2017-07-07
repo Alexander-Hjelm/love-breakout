@@ -48,7 +48,7 @@ function love.draw()
 
   love.graphics.setColor(255, 255, 255, 255)
   love.graphics.setFont(love.graphics.newFont(18))
-  love.graphics.print("Löve Breakout", 10, 10)
+  love.graphics.print("Freaköut!", 10, 10)
   love.graphics.print("Score: " .. score, 10, 30)
   love.graphics.print("Combo: " .. combo, 10, 50)
   love.graphics.print("Lives: " .. lives, 10, 70)
