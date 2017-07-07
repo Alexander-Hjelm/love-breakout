@@ -2,7 +2,7 @@
 Ball = Object:extend()
 
 -- Constructor
-function Ball.new(self, paddle, bricks)
+function Ball.new(self, paddle, bricks, sounds)
   self:reset()
 
   self.width = 16
@@ -15,6 +15,7 @@ function Ball.new(self, paddle, bricks)
 
   -- Image definitions
   self.imgBall = love.graphics.newImage("/img/ball.png")
+  self.sounds = sounds
 end
 
 function Ball.draw(self)
@@ -31,14 +32,17 @@ function Ball.checkCollision(self, combo, lives)
   if self.y <= 0 then
     self.theta = -self.theta
     self.y = 0
+    sounds["hit_brick"]:play()
   end
   if self.x <= 0 then
     self.theta = math.pi - self.theta
     self.x = 0
+    sounds["hit_brick"]:play()
   end
   if self.x + 16 >= width then
     self.theta = - math.pi - self.theta
     self.x = width - 16
+    sounds["hit_brick"]:play()
   end
   if self.y + 16 >= height then
     lives = lives - 1
@@ -47,6 +51,7 @@ function Ball.checkCollision(self, combo, lives)
     end
     self:reset()
     combo = 1
+    sounds["death"]:play()
     -- self.theta = -self.theta --cheat
   end
 
@@ -64,6 +69,7 @@ function Ball.checkCollision(self, combo, lives)
 
       self.y = self.paddle:getY() - 16
       combo = 1
+      sounds["hit_paddle"]:play()
     end
   end
 
@@ -138,7 +144,7 @@ function Ball.checkBricksCollision(self, score, combo)
         score = score + 10 * combo
         combo = combo + 0.5
       end
-
+      sounds["hit_brick"]:play()
     end
   end
 

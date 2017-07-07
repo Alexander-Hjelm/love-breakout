@@ -16,6 +16,14 @@ colors['w'] = {255, 255, 255}
 -- level definitions
 bricks = {}
 
+-- sfx definitions
+sounds = {
+  ["death"] = love.audio.newSource("/sfx/death.wav", "stream"),
+  ["hit_brick"] = love.audio.newSource("/sfx/hit_brick.wav", "stream"),
+  ["hit_paddle"] = love.audio.newSource("/sfx/hit_paddle.wav", "stream"),
+  ["new_level"] = love.audio.newSource("/sfx/new_level.wav", "stream"),
+  ["win"] = love.audio.newSource("/sfx/win.wav", "stream"),
+}
 
 local paddle
 local ball
@@ -28,8 +36,9 @@ local currentLevel = 1
 
 function love.load()
   paddle = Paddle()
-  ball = Ball(paddle, bricks)
+  ball = Ball(paddle, bricks, sounds)
   loadLevel(currentLevel)
+  sounds["new_level"]:play()
 end
 
 function love.draw()
@@ -48,6 +57,7 @@ function love.draw()
 
   if currentLevel == 11 then
     love.graphics.print("You win! Final score: " .. score, 300, 200)
+    sounds["win"]:play()
   end
 end
 
@@ -60,6 +70,7 @@ function love.update(dt)
     currentLevel = currentLevel + 1
     loadLevel(currentLevel)
     ball:reset()
+    sounds["new_level"]:play()
   end
 end
 
